@@ -8,6 +8,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      slug: {
+        type: Sequelize.STRING,
+        unique: true,
+        allowNull: false
+      },
       nama_brand: {
         type: Sequelize.STRING
       },

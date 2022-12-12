@@ -10,8 +10,30 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      this.hasMany(models.Spesifikasi, {foreignKey: 'id_spesifikasi'})
+      this.hasMany(models.Spesifikasi, {foreignKey: 'id_jenis_spesifikasi'})
     }
+
+    static tambah({namaJenisSpesifikasi, spesifikasi}){
+      return this.create({
+        nama_jenis_spesifikasi: namaJenisSpesifikasi,
+        Spesifikasis: spesifikasi
+      }, {
+        include: [{
+          association: "Spesifikasis",
+          as: 'Spesifikasis'
+        }]
+      })
+      
+    }
+
+    static ubah({namaJenisSpesifikasi}, id){
+      return this.update({nama_kategori: namaKategori},{ where : {id} });
+    }
+
+    static hapus(id) {
+      return this.destroy({ where: { id } });      
+    }
+
   }
   JenisSpesifikasi.init({
     nama_jenis_spesifikasi: DataTypes.STRING

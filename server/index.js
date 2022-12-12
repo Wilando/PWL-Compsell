@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 8000;
 
 // Middleware json untuk membaca request body bertipe json
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 
 // Middleware untuk cookie parser
 app.use(cookieParser());

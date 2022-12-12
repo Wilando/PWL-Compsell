@@ -30,15 +30,15 @@ module.exports = {
 
     User.findOne({
       where: { email },
-    }).then(async (admin) => { // eslint-disable-line consistent-return
-      const match = await bcrypt.compare(password, admin.password);
+    }).then(async (user) => { // eslint-disable-line consistent-return
+      const match = await bcrypt.compare(password, user.password);
       /*
       jika Admin berhasil ditemukan, pastikan password
       dari request body sesuai dengan password Admin di tabel
       */
-      if (match) {
+      if (match && user.id_role == 2) {
         // jalankan fungsi untuk membuat token, kemudian simpan hasil ke dalam accessToken
-        const accessToken = generateToken(admin.id, admin.email);
+        const accessToken = generateToken(user.id, user.email);
 
         return res
           .cookie('accessToken', accessToken, {
@@ -46,17 +46,30 @@ module.exports = {
             secure: process.env.NODE_ENV === 'production',
           })
           .status(200)
-          .json({ message: 'Log in Berhasil' });
+          .json({ message: 'Log in Customer Berhasil' });
       }
+      else if (match && user.id_role == 1){
+        const accessToken = generateToken(user.id, user.email);
+
+        return res
+          .cookie('accessToken', accessToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+          })
+          .status(200)
+          .json({ message: 'Log in Admin Berhasil' }); 
+      }
+
       if (!match) {
         return res.json({ message: 'Email atau Password Salah' });
       }
-    }).catch((err) => res.json({ message: 'Email atau Password Salah' })); // eslint-disable-line no-unused-vars
+    }).catch((err) => res.json({ message: 'error' })); // eslint-disable-line no-unused-vars
   },
 
   whoami: (req, res) => res.json({
     nama: req.user.nama,
     email: req.user.email,
+    role: req.user.id_role
   }),
 
   logout: (req, res) => res

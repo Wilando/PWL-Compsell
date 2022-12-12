@@ -12,13 +12,14 @@ export default function Navbar({isLogin, currentUser}) {
   const router = useRouter();
 
   const logout = () => {
-    AuthService.logout();
-    router.push("/");
+    AuthService.logout()
+    .then(()=>{
+      router.push("/");
+    });
   }
 
   return (
     <div>
-
       <nav className={`navbar navbar-expand-lg px-0 px-md-5 py-3 ${style.navbar}`}>
         <div className="container-fluid">
           <div className="dropdown me-0 me-md-5">

@@ -6,6 +6,8 @@ const {
 /* import bcrypt untuk melakukan enkripsi */
 const bcrypt = require('bcrypt');
 const { v4: uuidv4 } = require('uuid');
+const { getPagination, getPagingData } = require('../src/utils/pagination');
+const _ = require("lodash");
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
@@ -22,6 +24,44 @@ module.exports = (sequelize, DataTypes) => {
     static async encrypt(password) {
       const hashedPassword = await bcrypt.hash(password, 10);
       return hashedPassword;
+    }
+
+    //fungsi fetch data dengan pencarian dan pagination
+    static searchPaginationAdmin(query){
+      const { page, size, filter } = query;
+      
+      const { limit, offset } = getPagination(page, size);
+      
+      const value = {
+        [Op.iLike]: "%" + filter + "%"
+      }
+
+      const fields = Object.keys(
+          _.omit(this.rawAttributes, [
+              "createdAt",
+              "updatedAt",
+              "id_role",
+              "password",
+              "id",
+          ])
+      );
+
+      const filters ={id_role: 1};
+
+      if(filter){
+        fields.forEach((item) => (filters[item] = value));  
+      }
+
+      return this.findAndCountAll({ 
+        where: filters, 
+        order: [["id", "DESC"]], 
+        limit, 
+        offset 
+      })
+        .then(data => {
+          const response = getPagingData(data, page, limit);
+          return response;
+        })
     }
 
     /* Method tambahAdmin, untuk menambahkan Admin */

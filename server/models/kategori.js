@@ -7,6 +7,7 @@ const SequelizeSlugify = require('sequelize-slugify');
 const { getPagination, getPagingData } = require('../src/utils/pagination');
 const fs = require('fs-extra');
 const path = require("path");
+const _ = require("lodash");
 
 module.exports = (sequelize, DataTypes) => {
   class Kategori extends Model {
@@ -22,12 +23,31 @@ module.exports = (sequelize, DataTypes) => {
 
     //fungsi fetch data dengan pencarian dan pagination
     static data(query){
-      const { page, size, nama_kategori } = query;
-      let condition = nama_kategori ? { nama_kategori: { [Op.iLike]: `%${nama_kategori}%` } } : null;
+      const { page, size, filter } = query;
+      
       const { limit, offset } = getPagination(page, size);
+      
+      const value = {
+        [Op.iLike]: "%" + filter + "%"
+      }
+      // let condition = filter ? { filter: { [Op.iLike]: `%${filter}%` } } : null;
+      const fields = Object.keys(
+          _.omit(this.rawAttributes, [
+              "createdAt",
+              "updatedAt",
+              "gambar_kategori",
+              "id",
+          ])
+      );
+
+      const filters ={};
+
+      if(filter){
+        fields.forEach((item) => (filters[item] = value));  
+      }
 
       return this.findAndCountAll({ 
-        where: condition, 
+        where: filters, 
         include: [{model: sequelize.models.SubKategori, attributes: { exclude: ['id','id_kategori'] }}],
         distinct: true,
         order: [["id", "DESC"]], 
@@ -47,7 +67,7 @@ module.exports = (sequelize, DataTypes) => {
 
     //fungsi tambah
     static tambah({namaKategori, subKategori}, fileName){
-    
+      
       if (subKategori == undefined || subKategori.length == 0 ) {
         return this.create({nama_kategori: namaKategori, gambar_kategori: fileName})
       }
