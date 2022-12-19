@@ -10,14 +10,14 @@ module.exports = {
     database: process.env.DATABASE_DEVELOPMENT,
     host: process.env.DATABASE_HOST_DEVELOPMENT,
     timezone: process.env.DATABASE_TIMEZONE_DEVELOPMENT,
-    dialect: 'postgres',
+    dialect: process.env.DIALECT,
   },
   test: {
     username: process.env.DATABASE_USERNAME,
     password: process.env.DATABASE_PASSWORD,
     database: process.env.DATABASE,
     host: process.env.DATABASE_HOST,
-    dialect: 'postgres',
+    dialect: process.env.DIALECT,
   },
   production: {
     username: process.env.DATABASE_USERNAME,
@@ -25,7 +25,7 @@ module.exports = {
     database: process.env.DATABASE,
     host: process.env.DATABASE_HOST,
     timezone: process.env.DATABASE_TIMEZONE,
-    dialect: 'postgres',
+    dialect: process.env.DIALECT,
     dialectOptions: {
       ssl: {
         require: true,
