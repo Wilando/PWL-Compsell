@@ -71,7 +71,7 @@ export default function Home({isLogin, currentUser}) {
             <PricingCard pricingOnly>
               <div className="d-grid gap-2 mt-2">
                 <button
-                  className="btn btn-success"
+                  className="btn btn-primary"
                   onClick={() => {
                     router.push({
                       pathname: "/checkout/checkout-success",

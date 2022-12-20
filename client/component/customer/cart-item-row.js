@@ -5,17 +5,17 @@ function CartItemRow() {
   const getQtyInput = () => {
     return (
       <div className="input-group input-group-sm" style={{ width: 100 }}>
-        <button className="btn btn-outline-success" type="button">
+        <button className="btn btn-outline-primary" type="button">
             -
         </button>
         <input
           type="text"
-          className="form-control text-center border-success"
+          className="form-control text-center border-primary"
           placeholder=""
           defaultValue="1"
           size="2"
         />
-        <button className="btn btn-outline-success" type="button">
+        <button className="btn btn-outline-primary" type="button">
           +
         </button>
       </div>

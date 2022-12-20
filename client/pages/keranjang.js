@@ -34,21 +34,8 @@ export default function Home({isLogin, currentUser}) {
               <h5 className="my-2">Keranjang</h5>
             </div>
             <div className="card-body p-2">
-              {/* <CartItem />
-              <hr className="text-muted my-1" />
-              <CartItem />
-              <hr className="text-muted my-1" />
-              <CartItem /> */}
               <div className="table-responsive">
                 <table className="table table-borderless align-middle mb-0">
-                  {/* <thead>
-                    <tr>
-                      <th scope="col">Product</th>
-                      <th scope="col">Price</th>
-                      <th scope="col">Qty</th>
-                      <th scope="col"></th>
-                    </tr>
-                  </thead> */}
                   <tbody>
                     <CartItemRow />
                     <CartItemRow />

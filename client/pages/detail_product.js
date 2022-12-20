@@ -81,11 +81,11 @@ export default function Home({isLogin, currentUser}) {
                   <div className="d-flex">
                     <a
                       href="#"
-                      className="btn btn-success px-md-4 col col-md-auto me-2"
+                      className="btn btn-primary px-md-4 col col-md-auto me-2"
                     >
                       Buy now
                     </a>
-                    <button className="btn btn-outline-success col col-md-auto">
+                    <button className="btn btn-outline-primary col col-md-auto">
                       &nbsp;Add to cart
                     </button>
                   </div>

@@ -13,10 +13,10 @@ function PricingCard({ data, pricingOnly, children }) {
           {!pricingOnly && (
             <div className="d-grid gap-2 mt-2">
               <Link href="/checkout/delivery-info">
-                <a className="btn btn-success">Checkout</a>
+                <a className="btn btn-primary">Checkout</a>
               </Link>
               <Link href="/">
-                <a className="btn btn-outline-success">Lanjutkan Belanja</a>
+                <a className="btn btn-outline-primary">Lanjutkan Belanja</a>
               </Link>
             </div>
           )}
