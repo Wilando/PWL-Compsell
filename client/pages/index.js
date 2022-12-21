@@ -24,7 +24,15 @@ export default function Home({isLogin, currentUser}) {
 
       <Navbar isLogin={isLogin} currentUser={currentUser} />
       
-      <h1>Ini Halaman Home</h1>
+
+      <div class="d-flex flex-row justify-content-center">
+        <div >
+          <img class="img-fluid" src="/temp/chip.png" alt="kategori" width="90" height="90" />
+          <h6>Kategori</h6>
+        </div>
+        <div class="p-2">Flex item 2</div>
+        <div class="p-2">Flex item 3</div>
+      </div>
       
       <Footer/>
       

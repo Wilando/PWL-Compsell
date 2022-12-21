@@ -29,6 +29,18 @@ const diskStorageLogoBrand = multer.diskStorage({
   },
 });
 
+const diskStorageGambarProduk = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, "../file/gambar_produk"));
+  },
+  // konfigurasi penamaan file yang unik
+  filename: function (req, file, cb) {
+    cb(
+      null,
+      file.originalname.split(".")[0] + "-" + Date.now() + path.extname(file.originalname)
+    );
+  },
+});
 
 const multerFilterGambar = ({req, res}, file, cb) => {
   if (file.mimetype.split("/")[1] === "jpeg" || file.mimetype.split("/")[1] === "png" || file.mimetype.split("/")[1] === "gif" ) {
@@ -42,6 +54,10 @@ const multerFilterGambar = ({req, res}, file, cb) => {
   }
 };
 
+const uploadGambarProduk = multer({
+  storage: diskStorageGambarProduk,
+  fileFilter: multerFilterGambar,
+});
 
 const uploadGambarKategori = multer({
   storage: diskStorageGambarKategori,
@@ -56,4 +72,5 @@ const uploadLogoBrand = multer({
 module.exports = {
   uploadGambarKategori,
   uploadLogoBrand,
+  uploadGambarProduk,
 };

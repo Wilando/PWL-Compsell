@@ -45,12 +45,25 @@ module.exports = (sequelize, DataTypes) => {
       if(filter){
         fields.forEach((item) => (filters[item] = value));  
       }
+      else{
+        return this.findAndCountAll({  
+          include: [{model: sequelize.models.SubKategori, attributes: { exclude: ['id','id_kategori'] }}],
+          distinct: true,
+          order: [["createdAt", "DESC"]], 
+          limit, 
+          offset 
+        })
+          .then(data => {
+            const response = getPagingData(data, page, limit);
+            return response;
+          })        
+      }
 
       return this.findAndCountAll({ 
-        where: filters, 
+        where: {[Op.or]:filters}, 
         include: [{model: sequelize.models.SubKategori, attributes: { exclude: ['id','id_kategori'] }}],
         distinct: true,
-        order: [["id", "DESC"]], 
+        order: [["createdAt", "DESC"]], 
         limit, 
         offset 
       })

@@ -63,7 +63,7 @@ module.exports = {
       if (!match) {
         return res.json({ message: 'Email atau Password Salah' });
       }
-    }).catch((err) => res.json({ message: 'error' })); // eslint-disable-line no-unused-vars
+    }).catch((err) => res.json({ message: 'Email atau Password Salah' })); // eslint-disable-line no-unused-vars
   },
 
   whoami: (req, res) => res.json({

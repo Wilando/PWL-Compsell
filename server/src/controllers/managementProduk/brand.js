@@ -1,11 +1,17 @@
 // import model
 const { Brand } = require('../../../models');
-
+const path = require("path");
 
 module.exports = {
 
   allData: (req, res) => {
-    Brand.allData()
+    Brand.data(req.query)
+      .then((brands) => res.json(brands))
+      .catch((err) => res.json(err));
+  },
+
+  noPagination: (req, res) => {
+    Brand.findAll()
       .then((brands) => res.json(brands))
       .catch((err) => res.json(err));
   },
@@ -57,7 +63,7 @@ module.exports = {
   },
 
   downloadGambar: (req, res) => {
-    const file = path.join(__dirname, `../../file/logo_brand/${req.params.gambarKategori}`);
+    const file = path.join(__dirname, `../../file/logo_brand/${req.params.file}`);
     return res.download(file);
   },
 

@@ -35,6 +35,9 @@ module.exports = {
       nama_produk: {
         type: Sequelize.STRING
       },
+      deskripsi: {
+        type: Sequelize.TEXT
+      },
       gambar_produk: {
         type: Sequelize.STRING
       },

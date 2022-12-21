@@ -1,11 +1,13 @@
 'use strict';
 const {
-  Model
+  Model, Op
 } = require('sequelize');
 
 const SequelizeSlugify = require('sequelize-slugify');
 const fs = require('fs-extra');
 const path = require("path");
+const { getPagination, getPagingData } = require('../src/utils/pagination');
+const _ = require("lodash");
 
 module.exports = (sequelize, DataTypes) => {
   class Brand extends Model {
@@ -16,6 +18,54 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       this.hasMany(models.Produk, {foreignKey: 'id_brand'})
+    }
+
+    static data(query){
+      const { page, size, filter } = query;
+      
+      const { limit, offset } = getPagination(page, size);
+      
+      const value = {
+        [Op.iLike]: "%" + filter + "%"
+      }
+      // let condition = filter ? { filter: { [Op.iLike]: `%${filter}%` } } : null;
+      const fields = Object.keys(
+          _.omit(this.rawAttributes, [
+              "createdAt",
+              "updatedAt",
+              "logo_brand",
+              "id",
+              "deskripsi_brand",
+          ])
+      );
+
+      const filters ={};
+
+      if(filter){
+        fields.forEach((item) => (filters[item] = value));  
+      }
+      else{
+        return this.findAndCountAll({  
+          order: [["createdAt", "DESC"]], 
+          limit, 
+          offset 
+        })
+          .then(data => {
+            const response = getPagingData(data, page, limit);
+            return response;
+          })        
+      }
+
+      return this.findAndCountAll({ 
+        where: {[Op.or]:filters}, 
+        order: [["createdAt", "DESC"]], 
+        limit, 
+        offset 
+      })
+        .then(data => {
+          const response = getPagingData(data, page, limit);
+          return response;
+        })
     }
 
     static tambah({namaBrand, deskripsiBrand}, fileName){

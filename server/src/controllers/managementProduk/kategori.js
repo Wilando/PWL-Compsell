@@ -1,11 +1,11 @@
 // import model
 const { Kategori, SubKategori } = require('../../../models');
-
+const path = require("path");
 
 module.exports = {
 
   dataKategoriAll: (req, res) => {
-    Kategori.findAll()
+    Kategori.findAll({ include: SubKategori })
       .then((kategoris) => res.json(kategoris))
       .catch((err) => res.json(err));
   },
@@ -63,7 +63,7 @@ module.exports = {
   },
 
   downloadGambar: (req, res) => {
-    const file = path.join(__dirname, `../../file/gambar_kategori/${req.params.gambarKategori}`);
+    const file = path.join(__dirname, `../../file/gambar_kategori/${req.params.file}`);
     return res.download(file);
   },
 

@@ -1,6 +1,6 @@
 'use strict';
 const {
-  Model
+  Model, Op
 } = require('sequelize');
 
 /* import bcrypt untuk melakukan enkripsi */
@@ -46,19 +46,33 @@ module.exports = (sequelize, DataTypes) => {
           ])
       );
 
-      const filters ={id_role: 1};
+      const filters ={};
 
       if(filter){
         fields.forEach((item) => (filters[item] = value));  
       }
-
+      else{
+        return this.findAndCountAll({ 
+          where: {id_role: 1}, 
+          order: [["createdAt", "DESC"]], 
+          limit, 
+          offset 
+        })
+          .then(data => {
+            
+            const response = getPagingData(data, page, limit);
+            return response;
+          })
+      }
+      
       return this.findAndCountAll({ 
-        where: filters, 
-        order: [["id", "DESC"]], 
+        where: {id_role: 1 ,[Op.or]:filters}, 
+        order: [["createdAt", "DESC"]], 
         limit, 
         offset 
       })
         .then(data => {
+          
           const response = getPagingData(data, page, limit);
           return response;
         })
@@ -97,6 +111,57 @@ module.exports = (sequelize, DataTypes) => {
       return this.update({ nama: nama, email }, { where: { id, id_role: 1 } });
     }
     //-------------------------------Customer-------------------------------------------
+    static searchPaginationCustomer(query){
+      const { page, size, filter } = query;
+      
+      const { limit, offset } = getPagination(page, size);
+      
+      const value = {
+        [Op.iLike]: "%" + filter + "%"
+      }
+
+      const fields = Object.keys(
+          _.omit(this.rawAttributes, [
+              "createdAt",
+              "updatedAt",
+              "id_role",
+              "password",
+              "id",
+          ])
+      );
+
+      const filters ={};
+
+      if(filter){
+        fields.forEach((item) => (filters[item] = value));  
+      }
+      else{
+        return this.findAndCountAll({ 
+          where: {id_role: 2}, 
+          order: [["createdAt", "DESC"]], 
+          limit, 
+          offset 
+        })
+          .then(data => {
+            
+            const response = getPagingData(data, page, limit);
+            return response;
+          })
+      }
+      
+      return this.findAndCountAll({ 
+        where: {id_role: 2 ,[Op.or]:filters}, 
+        order: [["createdAt", "DESC"]], 
+        limit, 
+        offset 
+      })
+        .then(data => {
+          
+          const response = getPagingData(data, page, limit);
+          return response;
+        })
+    }
+
     /* Method Register */
     static async register({
       nama, email, password,

@@ -4,8 +4,10 @@ import Link from 'next/link';
 import AuthService from "../../services/auth.service";
 // Icon
 import { IconContext } from "react-icons";
-import { BsFillMenuButtonWideFill, BsLayoutTextWindowReverse, BsPersonLinesFill } from "react-icons/bs";
+import { BsFillMenuButtonWideFill, BsLayoutTextWindowReverse, BsPersonLinesFill, BsFillPeopleFill, BsFillHandbagFill } from "react-icons/bs";
 import { TbLogout } from "react-icons/tb";
+import { FaClipboardList, FaCalculator, FaLuggageCart } from "react-icons/fa";
+import { BiCategoryAlt } from "react-icons/bi";
 
 const NavbarAndSidebar = ({children ,nama}) => {
 
@@ -37,18 +39,43 @@ const NavbarAndSidebar = ({children ,nama}) => {
                   <BsLayoutTextWindowReverse/> Dashboard
                 </a>
               </Link>
-              <Link href="/admin/dashboard">
+              <Link href="/admin/management_admin">
                 <a className={`list-group-item list-group-item-action list-group-item-light p-3 sidebar-item ${router.pathname == "/admin/management_admin" && 'active-sidebar'}`}>
                   <BsPersonLinesFill/> Management Admin
                 </a>
               </Link>
-              <Link href="/admin/dashboard">
-                <a className={`list-group-item list-group-item-action list-group-item-light p-3 sidebar-item ${router.pathname == "/admin/" && 'active-sidebar'}`}>Customer</a>
+              <Link href="/admin/customer">
+                <a className={`list-group-item list-group-item-action list-group-item-light p-3 sidebar-item ${router.pathname == "/admin/customer" && 'active-sidebar'}`}>
+                  <BsFillPeopleFill /> Customer
+                </a>
               </Link>
               <Link href="/admin/dashboard">
-                <a className={`list-group-item list-group-item-action list-group-item-light p-3 sidebar-item ${router.pathname == "/admin/" && 'active-sidebar'}`}>Product</a>
+                <a className={`list-group-item list-group-item-action list-group-item-light p-3 sidebar-item ${router.pathname == "/admin/" && 'active-sidebar'}`}>
+                  <FaCalculator /> Pesanan
+                </a>
               </Link>
-              <a className="list-group-item list-group-item-action list-group-item-light p-3 sidebar-item" href="#!">Pesanan</a>
+              <button className={`list-group-item list-group-item-action list-group-item-light p-3 sidebar-item`}
+                data-bs-toggle="collapse" data-bs-target="#subMenu" aria-expanded="false" aria-controls="subMenu"
+              >
+                <FaClipboardList /> Management Product
+              </button>
+              <div className="collapse" id="subMenu">
+                <Link href="/admin/kategori">
+                  <a className={`text-center list-group-item list-group-item-action list-group-item-light p-3 ${router.pathname == "/admin/kategori" && 'active-sidebar'}`}>
+                    <BiCategoryAlt/> Kategori
+                  </a>
+                </Link>
+                <Link href="/admin/brand">
+                  <a className={`text-center list-group-item list-group-item-action list-group-item-light p-3 ${router.pathname == "/admin/brand" && 'active-sidebar'}`}>
+                    <BsFillHandbagFill/> Brand
+                  </a>
+                </Link>
+                <Link href="/admin/produk">
+                  <a className={`text-center list-group-item list-group-item-action list-group-item-light p-3 ${router.pathname == "/admin/produk" && 'active-sidebar'}`}>
+                    <FaLuggageCart/> Produk
+                  </a>
+                </Link>
+              </div>
           </div>
       </div>
       {/*<!-- Page content wrapper-->*/}

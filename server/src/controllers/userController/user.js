@@ -3,7 +3,7 @@ const { User } = require('../../../models');
 module.exports = {
   //-------------------------------------------Admin---------------------------
   dataAdmin: (req, res) => {
-    User.findAll({where: { id_role: 1 }})
+    User.searchPaginationAdmin(req.query)
       .then((admins) => res.json(admins))
       .catch((err) => res.json(err));
   },
@@ -34,7 +34,7 @@ module.exports = {
 
   //--------------------------------Customer-----------------------------
   dataCustomer: (req, res) => {
-    User.findAll({where: { id_role: 2 }})
+    User.searchPaginationCustomer(req.query)
       .then((users) => res.json(users))
       .catch((err) => res.json(err));
   },
