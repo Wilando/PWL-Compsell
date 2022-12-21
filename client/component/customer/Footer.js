@@ -1,9 +1,9 @@
 
 export default function Footer() {
   return (
-    <div className="border-top">
+    <div className="borderFooter">
 
-      <footer className="py-2 container">
+      <footer className="py-4 container">
         <div className="row justify-content-between">
           <div className="col-6 col-md-2 mb-3">
             <h5>Media Social</h5>

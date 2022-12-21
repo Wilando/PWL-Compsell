@@ -33,7 +33,7 @@ export default function Navbar({isLogin, currentUser}) {
             </ul>
           </div>
           <Link href="/">
-            <a className="navbar-brand">Navbar</a>
+            <a className="navbar-brand text-white"><h3>Compsell</h3></a>
           </Link>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>

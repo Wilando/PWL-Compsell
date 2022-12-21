@@ -1,0 +1,15 @@
+.kategoriContainer {
+    background: #F5F5F5;
+    border-radius: 15px;
+}
+
+.barangContainer{
+    background: white;
+}
+
+.daftarKategori{
+    color: green;
+    font-size: 30px;
+}
+
+@media (max-width: 767.98px) { .border_sm_start_none { border-left: none !important; } }

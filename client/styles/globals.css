@@ -6,3 +6,8 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+.borderFooter{
+  border-top-style: solid;
+  border-color: green;
+}
+
